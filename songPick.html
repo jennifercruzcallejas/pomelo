@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POMELO - Pick Songs</title>
+    <script src="pomelo.js" defer></script>
+    <link rel="stylesheet" href="songPick.css">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img id="logo" src="images/pomelologo.svg" alt="Pomelo Logo">
+    <div id="mainSection" style="display: none;">
+        <!-- song search section including the results -->
+        <div id="songSearch">
+            <p>Select up to 3 songs.</p>
+            <input type="text" id="songInput" oninput="searchSong(this.value, handleSearchResponse)">
+            <div id="searchResults"></div>
+        </div>
+        <div id="selectedSongs">
+            <h3>Song choices:</h3>
+        </div>
+        <!-- submit button -->
+        <div id="submit" onclick="submitSongs()"> 
+            <img id="submitShadow" src="images/submitshadow.svg">
+            <img id="submitButton" src="images/submitbutton.svg">
+            <div id="submitText">Submit</div>
+        </div>
+        <!-- clear button -->
+        <div id="clear" onclick="clearSelectedSongs()">
+            <img id="clearShadow" src="images/clearshadow.svg">
+            <img id="clearButton" src="images/clearbutton.svg">
+            <div id="clearText">Clear</div>
+        </div>
+        <!-- error message when 1-3 songs not chosen -->
+        <div id="noSongs">
+            <img id="songError" src="images/error.svg" alt="Error Image">
+            <img id="songBox" src="images/errorBox_1.svg" alt="Error Message">
+            <div id="songErrorMessage">choose 1-3 songs!</div>
+        </div>
+        </div>
+    <div id="authSection">
+        <button onclick="authorize()">Login with Spotify</button>
+    </div>
+    <div id="backgroundPomelo"></div>
+
+    <!-- script for repeating pomelos in the back -->
+    <script>
+        // creates lots of little pomelos in a rain effect but moving diagonally
+        const pomeloContainer = document.getElementById('backgroundPomelo');
+        const pomeloSize = 25; 
+        const pomeloSpacing = 10; 
+        const totalSize = pomeloSize + pomeloSpacing; 
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+
+        const numPomelosX = Math.ceil(containerWidth / totalSize);
+        const numPomelosY = Math.ceil(containerHeight / totalSize);
+
+        for (let y = 0; y < numPomelosY; y++) {
+            for (let x = 0; x < numPomelosX; x++) {
+                const pomelo = document.createElement('div');
+                pomelo.classList.add('pomelo');
+                pomelo.style.top = `${y * totalSize}px`; 
+                pomelo.style.left = `${x * totalSize}px`; 
+                pomeloContainer.appendChild(pomelo);
+            }
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,215 @@
+body {
+    background-color: #F6F0E2;
+    display: flex;
+    overflow:hidden;
+    flex-direction: column; /* aligns all contents within body into a column like layout */
+    justify-content: center; /* aligns content on the center layout (idk if needed tbh*/
+    align-items: center; 
+    height: 100vh;
+    margin: 0;
+    font-family: 'Pixelify Sans';
+    cursor: url(images/pomelocursor_1.svg), auto;
+}
+
+/* font for the text */
+.pixelify-sans-jebby {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+  }
+
+/* submit button */
+button {
+    width: 200px;
+    padding: 10px;
+    background-color: purple;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    position: absolute;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    cursor: url(images/pomelocursor_1.svg), auto; /* sets cursor upon hovering button to custom cursor */
+    opacity: 0;
+    animation: buttonfadein 2s forwards; /* calling the button fade in animation */
+    animation-delay: 9s;                 /* delaying until the other animations are done */
+}
+
+/* hover effect on the submit button */
+button:hover {
+    background-color: blueviolet;
+}
+
+/* logo image */
+#logo {
+    width: 400px;
+    height: auto;
+}
+
+/* top left dancing pomelo img */
+#dancingPomeloOne {
+    position: absolute;
+    padding-top: 50px;
+    width: 300px;
+    height: auto;
+    pointer-events: none; 
+    animation: dancingleft 2s infinite; /* calling the dancing animation */
+    animation-timing-function:ease-in-out; 
+}   
+
+/* top left dancing pomelo img */
+#dancingPomeloTwo {
+    position: absolute;
+    padding-top: 50px;
+    width: 300px;
+    height: auto;
+    pointer-events: none; 
+    animation: dancingright 2s infinite; 
+    animation-timing-function:ease-in-out; 
+}   
+
+
+/* h1 text */
+#intro {
+    overflow: hidden;
+    border-right: .15em solid rgb(231, 54, 15);
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .20em;
+    font-size: 75px;
+    animation: 
+        typing 3.5s steps(40, end),        
+        blink-caret .75s step-end infinite, 
+        moveTextUp 5s 1 forwards;           
+    animation-duration: 4s, .75s, 2.5s;                         
+    animation-delay: 0s, 0s, 6s;            /* typing, blink-caret, movetextup  */      
+}
+
+/* combo of logo and button (separate from the intro) */
+#logoAndButton {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    opacity: 0;
+    animation: logomovein 2s forwards;
+    animation-delay: 7.5s;  /* delay logo appearance */
+}
+
+@keyframes moveTextUp {
+    from { margin-top: 0; opacity: 1; }
+    to { margin-top: -400px; opacity: 0; }
+}
+    
+@keyframes typing {
+    from { width: 0; }
+    to { width: 100%; }
+}
+    
+@keyframes blink-caret {
+    from, to { border-color: transparent; }
+    50% { border-color: orange; }
+}
+    
+/* animation for moving the button from bottom to middle */
+@keyframes logomovein {
+    from { top: 100%; opacity: 0; }
+    to { top: 50%; opacity: 1; }
+}
+
+/* animation for fading in the button */
+@keyframes buttonfadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes dancingleft {
+    0%   { left:0px;  top:0px;    transform: rotate(5deg); }
+    25%  { left:0px;  top:10px;   transform: rotate(0deg); }
+    50%  { left:0px;  top:0px;    transform: rotate(-5deg); }
+    75%  { left:0px;  top:10px;   transform: rotate(0deg);}
+    100% { left:0px;  top:0px;    transform: rotate(5deg); }
+}
+
+@keyframes dancingright {
+    0%   { right:0px;  top:0px;    transform: rotate(5deg); }
+    25%  { right:0px;  top:15px;   transform: rotate(0deg); }
+    50%  { right:0px;  top:0px;    transform: rotate(-5deg); }
+    75%  { right:0px;  top:15px;   transform: rotate(0deg);}
+    100% { right:0px;  top:0px;    transform: rotate(5deg); }
+}
+
+/* container for submit button */
+#spotify {
+    position: relative;
+    text-align: center;
+    top: 550px;
+    width: 210px;
+    margin: 0 auto;
+    
+}
+
+/* submit image */
+#spotifyButton {
+    position: fixed;
+    top: 80%;
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: 0;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    opacity: 0;
+    animation: buttonfadein 2s forwards; 
+    animation-delay: 9s;                
+}
+
+/* submit text */
+#spotifyText {
+    font-weight: 700;
+    position: fixed;
+    top: 84%;
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 100px;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    opacity: 0;
+    animation: buttonfadein 2s forwards; 
+    animation-delay: 9s;              
+}
+
+/* shadow for submit button */
+#spotifyShadow {
+    position: fixed;
+    top: 80%;
+    left: 50%; 
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: -1;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    opacity: 0;
+    animation: buttonfadein 2s forwards; 
+    animation-delay: 9s;                 
+}
+
+/* button move animation */
+#spotify:hover #spotifyButton {
+    top: 79%;
+    left: 49%; 
+    transform: translateX(-50%);
+}
+
+/* button move animation for text*/
+#spotify:hover #spotifyText {
+    position: fixed;
+    top: 83%;
+    left: 49%; 
+    transform: translateX(-50%);
+}
+
+
+

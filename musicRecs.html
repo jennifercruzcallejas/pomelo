@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POMELO - Recommendations</title>
+    <script src="pomelo.js" defer></script>
+    <link rel="stylesheet" href="musicRecs.css">
+    <!-- font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400..700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <img id ="dancingPomeloOne" src="images/dancingPomelo.svg" alt="Dancing Pomelo">
+    <img id ="dancingPomeloTwo" src="images/dancingPomelo.svg" alt="Dancing Pomelo">
+    <img id="logo" src="images/pomelologo.svg" alt="Pomelo Logo" onclick="goBack()">
+    <div id="loading"></div>
+    <p id="title">Recommended Songs</p>
+    <div id="recommendations"></div>
+    <div id="miniPlayer" class="miniPlayer">
+        <audio id="audioPlayer" controls></audio>
+        <button id="closePlayerButton">&times;</button>
+    </div>
+    <!-- error message when snippet not found -->
+    <div id="errorContainer">
+        <img id="error" src="images/ohno.svg" alt="Error Image">
+        <img id="errorBox" src="images/errorBox_1.svg" alt="Error Message">
+        <div id="errorMessage">couldn't find snippet...</div>
+    </div>
+    <div id="backgroundPomelo"></div>
+
+    <script>
+        // loading the dancing pomelos when user plays a song
+
+        document.getElementById('closePlayerButton').addEventListener('click', () => {
+            document.getElementById('miniPlayer').style.display = 'none';
+            document.getElementById('dancingPomeloOne').style.display = 'none';
+            document.getElementById('dancingPomeloTwo').style.display = 'none';
+        });
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const audioPlayer = document.getElementById('audioPlayer');
+            const dancingPomeloOne = document.getElementById('dancingPomeloOne');
+            const dancingPomeloTwo = document.getElementById('dancingPomeloTwo');
+    
+            audioPlayer.addEventListener('play', () => {
+                dancingPomeloOne.style.display = 'block';
+                dancingPomeloTwo.style.display = 'block';
+            });
+    
+            audioPlayer.addEventListener('pause', () => {
+                dancingPomeloOne.style.display = 'none';
+                dancingPomeloTwo.style.display = 'none';
+            });
+    
+            audioPlayer.addEventListener('ended', () => {
+                dancingPomeloOne.style.display = 'none';
+                dancingPomeloTwo.style.display = 'none';
+            });
+    
+        });  
+          
+        // creates lots of little pomelos in a rain effect but moving diagonally
+        const pomeloContainer = document.getElementById('backgroundPomelo');
+        const pomeloSize = 25; 
+        const pomeloSpacing = 10; 
+        const totalSize = pomeloSize + pomeloSpacing; 
+        const containerWidth = window.innerWidth;
+        const containerHeight = window.innerHeight;
+
+        const numPomelosX = Math.ceil(containerWidth / totalSize);
+        const numPomelosY = Math.ceil(containerHeight / totalSize);
+
+        for (let y = 0; y < numPomelosY; y++) {
+            for (let x = 0; x < numPomelosX; x++) {
+                const pomelo = document.createElement('div');
+                pomelo.classList.add('pomelo');
+                pomelo.style.top = `${y * totalSize}px`; 
+                pomelo.style.left = `${x * totalSize}px`; 
+                pomeloContainer.appendChild(pomelo);
+            }
+        }
+    </script>
+
+</body>
+</html>

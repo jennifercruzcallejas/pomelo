@@ -1,0 +1,286 @@
+body {
+    background-color: #f6f0e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: 'Pixelify Sans';
+    cursor: url(images/pomelocursor_1.svg), auto;
+    flex-direction: column; 
+}
+
+#logo {
+    position: absolute;
+    top: 3%;
+    left: 10%; 
+    width: 200px;
+    height: auto;
+    transform: translateX(-50%);
+}
+
+#logo:hover {
+    opacity: 0.5;
+}
+
+button {
+    width: auto;
+    padding: 10px;
+    background-color: purple;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-size: 16px;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    position: fixed;
+    bottom: 50px;
+    left: 85%;
+    transform: translateX(-50%);
+}
+
+button:hover {
+    background-color: blueviolet;
+}
+
+#recommendations {
+    opacity: 0;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 20px;
+    max-height: 200px;
+    overflow-y: auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    animation: reccsfadein .5s forwards;
+    animation-delay: 1s;
+}
+
+#recommendations div {
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 5px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    cursor: pointer;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#recommendations div:hover {
+    background-color: #f0f0f0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+#recommendations div:active {
+    background-color: #e0e0e0;
+}
+
+#title {
+    font-size: 40px;
+    position: fixed; 
+    bottom: 450px;
+}
+
+#loading {
+    border: 8px solid rgba(0, 0, 0, 0.1);
+    border-left-color: purple;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    position: fixed;
+    margin: auto; 
+    animation: spinner 1s linear infinite, loadingfadeout 2s forwards;
+    animation-duration: .5s, .5s;
+    animation-delay: 0s, 5.5s; 
+}
+
+@keyframes spinner {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+@keyframes loadingfadeout {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes reccsfadein {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+#miniPlayer {
+    display: none; 
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+}
+
+#miniPlayer audio {
+    width: 300px;
+}
+
+#miniPlayer button {
+    background-color: #CE2937;
+    left: 97%;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px;
+    cursor: pointer;
+}
+
+@keyframes floatDiagonal {
+    0% {
+        transform: translate(-100%, 100%);
+    }
+    100% {
+        transform: translate(100%, -100%);
+    }
+}
+
+#backgroundPomelo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+.pomelo {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url('images/recoloredpomelo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    animation: floatDiagonal 10s linear infinite;
+    margin: 5px; 
+}
+
+.pixelify-sans-jebby {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+#errorContainer {
+    position: relative;
+    text-align: center;
+    top: -400px; 
+    width: 110px;
+    margin: 0 auto;
+    display: none;
+    animation: disappear 2s forwards;
+    animation-delay: 4s; 
+}
+
+#errorBox {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 50px;
+    left: 60px;
+    width: 900px;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    display: none;
+}
+
+#error {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 220px; 
+    left: 60px;
+    z-index: 1;
+    width: 450px;
+    cursor: url(images/pomelocursor_1.svg), auto; 
+    display: none;
+    opacity: 1;
+    animation: fadeOut 2s forwards;
+    animation-delay: 1s;  
+}
+
+#errorMessage {
+    font-size: 50pt;
+    font-weight: 700;
+    position: absolute;
+    top: 160px;
+    left: -140px;
+    width: 400px;
+    opacity: 0;
+    animation: fadeIn 2s forwards;
+    animation-delay: 1.8s;  
+}
+
+#errorBox.show, #error.show, #errorContainer.show {
+    display: block;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeOut {
+    from { opacity: 1; }
+    to { opacity: 0; }
+}
+
+@keyframes disappear {
+    from { opacity: 1; }
+    to { opacity: 0;
+        visibility: hidden;
+    }
+}
+
+#dancingPomeloOne {
+    display: none;
+    position: fixed;
+    bottom: 1%;
+    left: 1%;
+    width: 300px;
+    height: auto;
+    pointer-events: none; 
+    animation: dancingleft 2s infinite;
+    animation-timing-function: ease-in-out; 
+    z-index: 1;
+}   
+
+#dancingPomeloTwo {
+    display: none;
+    position: fixed;
+    bottom: 1%;
+    right: 1%;
+    width: 300px;
+    width: 300px;
+    height: auto;
+    pointer-events: none; 
+    animation: dancingright 2s infinite; 
+    animation-timing-function: ease-in-out; 
+    z-index: 1;
+}   
+
+@keyframes dancingleft {
+    0%   { transform: translateY(0) rotate(5deg); }
+    25%  { transform: translateY(10px) rotate(0deg); }
+    50%  { transform: translateY(0) rotate(-5deg); }
+    75%  { transform: translateY(10px) rotate(0deg); }
+    100% { transform: translateY(0) rotate(5deg); }
+}
+
+@keyframes dancingright {
+    0%   { transform: translateY(0) rotate(5deg); }
+    25%  { transform: translateY(15px) rotate(0deg); }
+    50%  { transform: translateY(0) rotate(-5deg); }
+    75%  { transform: translateY(15px) rotate(0deg); }
+    100% { transform: translateY(0) rotate(5deg); }
+}

@@ -1,0 +1,338 @@
+body {
+    background-color: #f6f0e2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    font-family: "Pixelify Sans", sans-serif;
+    cursor: url(images/pomelocursor_1.svg), auto;
+}
+
+/* font for the text */
+.pixelify-sans-jebby {
+    font-family: "Pixelify Sans", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+/* logo image */
+#logo {
+    position: absolute;
+    top: 3%;
+    left: 10%;
+    transform: translateX(-50%);
+    width: 200px;
+    height: auto;
+}
+
+#logo:hover {
+    opacity: 0.5;
+}
+
+/* title text above the input box */
+#songSearch p {
+    position: absolute;
+    text-wrap: nowrap;
+    width: 100%;
+    transform: translateX(-50%);
+    bottom: 75px;
+    font-size: 40px;
+    margin: 10px;
+    padding-top: 10px;
+    padding-bottom: 75px;
+    letter-spacing: 1px;
+    font-weight: 700;
+}
+
+/* input box */
+#songSearch input {
+    position: relative;
+    top: -75px;
+    width: auto;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+/* div block containing other elements */
+#selectedSongs {
+    position: absolute;
+    top: 35%;
+    right: 1%;
+    width: 300px;
+    padding: 10px;
+}
+
+/* list preferences when user selects a song */
+.selected-song {
+    background-color: black;
+    margin-bottom: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.selected-song {
+    color: white;
+}
+
+#songSearch {
+    position: relative;
+}
+
+/* output when user is typing songs */
+#searchResults {
+    display: none;
+    position: absolute;
+    top: -25px;
+    left: 0;
+    width: auto;
+    background-color: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+#searchResults div {
+    padding: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+/* hover color over search results */
+#searchResults div:hover {
+    background-color: #CE2937;
+}
+
+#backgroundPomelo {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: -1;
+    overflow: hidden;
+}
+
+/* allows for moving image of pomelo in backgroud */
+.pomelo {
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-image: url('images/recoloredpomelo.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    opacity: 0.5;
+    animation: floatDiagonal 10s linear infinite;
+    margin: 5px;
+}
+
+@keyframes floatDiagonal {
+    0% {
+        transform: translate(-100%, 100%);
+    }
+    100% {
+        transform: translate(100%, -100%);
+    }
+}
+
+/* container for submit button */
+#submit {
+    position: relative;
+    text-align: center;
+    top: 200px;
+    width: 210px;
+    margin: 0 auto;
+}
+
+/* submit image */
+#submitButton {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: 0;
+}
+
+/* submit text */
+#submitText {
+    font-weight: 700;
+    position: absolute;
+    top: 35px;
+    left: 75px;
+}
+
+/* shadow for submit button */
+#submitShadow {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: -1;
+}
+
+/* button move animation */
+#submit:hover #submitButton {
+    top: -8px;
+    left: 45%;
+    transform: translateX(-50%);
+}
+
+/* button move animation for text */
+#submit:hover #submitText {
+    top: 27px;
+    left: 70px;
+}
+
+/* container for clear button */
+#clear {
+    position: relative;
+    text-align: center;
+    top: 200px;
+    left: 520px;
+    width: 210px;
+    margin: 0;
+}
+
+/* clear image */
+#clearButton {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: 0;
+}
+
+/* clear text */
+#clearText {
+    font-weight: 800;
+    position: absolute;
+    top: 35px;
+    left: 75px;
+}
+
+/* shadow for clear button */
+#clearShadow {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 180px;
+    height: auto;
+    z-index: 0;
+}
+
+/* button move animation */
+#clear:hover #clearButton {
+    top: -8px;
+    left: 45%;
+    transform: translateX(-50%);
+}
+
+/* button move animation for text */
+#clear:hover #clearText {
+    top: 27px;
+    left: 70px;
+}
+
+#songBox.show, #songError.show, #songErrorMessage.show {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+}
+
+/* container for submit button */
+#noSongs {
+    display: none;
+    position: relative;
+    text-align: center;
+    top: -400px;
+    width: 110px;
+    margin: 0 auto;
+    animation: disappear 2s forwards; /* calling animation to disappear */
+    animation-delay: 4s;
+}
+
+/* error frame */
+#songBox {
+    position: absolute;
+    transform: translateX(-50%);
+    top: 50px;
+    left: 60px;
+    width: 900px;
+    cursor: url(images/pomelocursor_1.svg), auto;
+    display: none;
+    animation: fadeOut 1s forwards;
+    animation-delay: 3s;
+}
+
+/* error text */
+#songError {
+    position: fixed;
+    transform: translateX(-50%);
+    top: 20%;
+    left: 50%;
+    z-index: 1;
+    width: 350px;
+    cursor: url(images/pomelocursor_1.svg), auto;
+    display: none;
+    opacity: 1;
+    animation: fadeOut 1s forwards;
+    animation-delay: 3s;
+}
+
+/* text overlay on error box */
+#songErrorMessage {
+    font-size: 30pt;
+    font-weight: 700;
+    position: fixed;
+    top: 45%; 
+    left: 50%;
+    transform: translateX(-50%);
+    width: 400px;
+    opacity: 0;
+    animation: fadeIn 1s forwards, flash 0.25s 2s infinite, disappear .5s 3s forwards;
+}
+
+/* animation for fading */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+/* animation for fading out */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+
+/* flash animation for error message text */
+@keyframes flash {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0; }
+}
+
+/* animation for fading out and disappearing */
+@keyframes disappear {
+    from { opacity: 1; }
+    to { opacity: 0; visibility: hidden; }
+}
