@@ -9,7 +9,7 @@ const RECOMMENDATIONS = "https://api.spotify.com/v1/recommendations";
 
 // redirect user to Spotify authorization page
 function authorize() {
-    let url = `${AUTHORIZE}?client_id=${client_id}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&show_dialog=true&scope=user-read-private user-read-email user-read-playback-state user-top-read`;
+    let url = `${AUTHORIZE}?client_id=${client_id}&response_type=code&redirect_uri=${encodeURIComponent(redirect)}&show_dialog=true&scope=user-read-private user-read-email user-read-playback-state user-top-read`;
     window.location.href = url;
 }
 
@@ -25,11 +25,17 @@ function pageLoad() {
 // handle the redirect from Spotify after authorization
 function handleRedirect() {
     let code = getCode();
-    fetchToken(code).then(token => {
-        window.localStorage.setItem('token', token);
-        window.history.pushState("", "", "songPick.html");
-        showSearchUI();
-    });
+    if (code) {
+        fetchToken(code).then(token => {
+            window.localStorage.setItem('token', token);
+            window.history.pushState("", "", "songPick.html");
+            showSearchUI();
+        }).catch(error => {
+            console.error("Error fetching token:", error);
+        });
+    } else {
+        console.error("No code found in URL");
+    }
 }
 
 // get the authorization code from the URL
@@ -67,10 +73,15 @@ function callAuthorizationApi(body) {
                 }
                 resolve(data.access_token);
             } else {
-                console.error(xhr.responseText);
-                alert(xhr.responseText);
+                console.error("Authorization API call error:", xhr.responseText);
+                alert("Error during authorization. Please try again.");
                 reject(xhr.responseText);
             }
+        };
+        xhr.onerror = function() {
+            console.error("Network error during authorization API call.");
+            alert("Network error. Please check your connection.");
+            reject("Network error");
         };
     });
 }
