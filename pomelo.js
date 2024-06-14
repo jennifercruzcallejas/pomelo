@@ -7,14 +7,16 @@ const token = "https://accounts.spotify.com/api/token";
 const SEARCH = "https://api.spotify.com/v1/search";
 const RECOMMENDATIONS = "https://api.spotify.com/v1/recommendations";
 
-// redirect user to Spotify authorization page
+// Redirect user to Spotify authorization page
 function authorize() {
     let url = `${AUTHORIZE}?client_id=${client_id}&response_type=code&redirect_uri=${encodeURIComponent(redirect)}&show_dialog=true&scope=user-read-private user-read-email user-read-playback-state user-top-read`;
+    console.log("Redirecting to Spotify authorization page:", url);
     window.location.href = url;
 }
 
-// load the appropriate page based on the authorization status
+// Load the appropriate page based on the authorization status
 function pageLoad() {
+    console.log("pageLoad function called");
     if (window.location.search.length > 0) {
         handleRedirect();
     } else {
@@ -22,8 +24,9 @@ function pageLoad() {
     }
 }
 
-// handle the redirect from Spotify after authorization
+// Handle the redirect from Spotify after authorization
 function handleRedirect() {
+    console.log("handleRedirect function called");
     let code = getCode();
     if (code) {
         fetchToken(code).then(token => {
@@ -38,8 +41,9 @@ function handleRedirect() {
     }
 }
 
-// get the authorization code from the URL
+// Get the authorization code from the URL
 function getCode() {
+    console.log("getCode function called");
     let code = null;
     const queryString = window.location.search;
     if (queryString.length > 0) {
@@ -49,14 +53,16 @@ function getCode() {
     return code;
 }
 
-// fetch token using the authorization code
+// Fetch token using the authorization code
 function fetchToken(code) {
+    console.log("fetchToken function called with code:", code);
     let body = `grant_type=authorization_code&code=${code}&redirect_uri=${encodeURI(redirect)}&client_id=${client_id}&client_secret=${client_secret}`;
     return callAuthorizationApi(body);
 }
 
-// make API call for authorization
+// Make API call for authorization
 function callAuthorizationApi(body) {
+    console.log("callAuthorizationApi function called with body:", body);
     return new Promise((resolve, reject) => {
         let xhr = new XMLHttpRequest();
         xhr.open("POST", token, true);
@@ -86,42 +92,47 @@ function callAuthorizationApi(body) {
     });
 }
 
-// refresh the access token using the refresh token
+// Refresh the access token using the refresh token
 function refreshAccessToken() {
+    console.log("refreshAccessToken function called");
     let refresh_token = localStorage.getItem("refresh_token");
     let body = `grant_type=refresh_token&refresh_token=${refresh_token}&client_id=${client_id}`;
     callAuthorizationApi(body);
 }
 
-// check if user is authorized
+// Check if user is authorized
 function checkAuth() {
+    console.log("checkAuth function called");
     const access_token = localStorage.getItem("access_token");
     if (!access_token) {
-        if (window.location.pathname !== '/home.html') {
+        console.log("No access token found, redirecting to home.html");
+        if (!window.location.pathname.endsWith('home.html')) {
             window.location.href = 'home.html';
         }
     } else {
-        if (window.location.pathname === '/home.html') {
+        console.log("Access token found, checking current page");
+        if (window.location.pathname.endsWith('home.html')) {
             window.location.href = 'songPick.html';
-        } else if (window.location.pathname === '/songPick.html') {
+        } else if (window.location.pathname.endsWith('songPick.html')) {
             showSearchUI();
         }
     }
 }
 
-// display the search user interface
+// Display the search user interface
 function showSearchUI() {
+    console.log("showSearchUI function called");
     document.getElementById("authSection").style.display = "none";
     document.getElementById("mainSection").style.display = "block";
 }
 
-// search for a song using Spotify API
+// Search for a song using Spotify API
 function searchSong(query, callback) {
     if (query.trim() === "") return;
     callApi("GET", `${SEARCH}?q=${query}&type=track&limit=5`, null, callback);
 }
 
-// set song recommendations based on selected track IDs
+// Set song recommendations based on selected track IDs
 function getRecommendations(trackIds, callback) {
     const validTrackIds = trackIds.filter(id => id);
     if (validTrackIds.length < 1 || validTrackIds.length > 4) {
@@ -133,7 +144,7 @@ function getRecommendations(trackIds, callback) {
     callApi("GET", url, null, callback);
 }
 
-// call the API
+// Call the API
 function callApi(method, url, body, callback) {
     let xhr = new XMLHttpRequest();
     xhr.open(method, url, true);
@@ -143,7 +154,7 @@ function callApi(method, url, body, callback) {
     xhr.onload = callback;
 }
 
-// handle the search response from Spotify API
+// Handle the search response from Spotify API
 function handleSearchResponse() {
     if (this.status == 200) {
         var data = JSON.parse(this.responseText);
@@ -154,7 +165,7 @@ function handleSearchResponse() {
     }
 }
 
-// display the search results in the UI
+// Display the search results in the UI
 function displaySearchResults(data) {
     const resultsDiv = document.getElementById("searchResults");
     resultsDiv.innerHTML = "";
@@ -172,7 +183,7 @@ function displaySearchResults(data) {
     }
 }
 
-// select a song from the search results
+// Select a song from the search results
 function selectSong(id, name) {
     const selectedSongs = document.getElementById("selectedSongs");
     if (selectedSongs.children.length < 4) {
@@ -187,7 +198,7 @@ function selectSong(id, name) {
     }
 }
 
-// submit the selected songs and store their IDs locally
+// Submit the selected songs and store their IDs locally
 function submitSongs() {
     const selectedSongs = document.getElementById("selectedSongs");
     const trackIds = Array.from(selectedSongs.children).map((div) => div.getAttribute("data-id")).filter(Boolean);
@@ -219,15 +230,15 @@ if (window.location.pathname.endsWith('musicRecs.html')) {
     getRecommendations(trackIds, handleRecommendationResponse);
 }
 
-// nav back to the song selection page
+// Nav back to the song selection page
 function goBack() {
     window.location.href = "songPick.html";
 }
 
-// cache for artist details to avoid redundant API calls
+// Cache for artist details to avoid redundant API calls
 let artistCache = {};
 
-// get artist details from Spotify API
+// Get artist details from Spotify API
 function artistDetails(artistId, callback) {
     if (artistCache[artistId]) {
         callback(null, artistCache[artistId]);
@@ -245,7 +256,7 @@ function artistDetails(artistId, callback) {
     });
 }
 
-// handle the recommendation response from Spotify API
+// Handle the recommendation response from Spotify API
 function handleRecommendationResponse() {
     if (this.status == 200) {
         var data = JSON.parse(this.responseText);
@@ -257,7 +268,7 @@ function handleRecommendationResponse() {
     }
 }
 
-// filter the recommendations based on artist popularity
+// Filter the recommendations based on artist popularity
 function filterRecommendations(tracks) {
     let filteredTracks = [];
     let remainingTracks = tracks.length;
@@ -287,7 +298,7 @@ function filterRecommendations(tracks) {
     processTrack(0);
 }
 
-// display song recommendations
+// Display song recommendations
 function displayRecommendations(data) {
     const recsDiv = document.getElementById("recommendations");
     recsDiv.innerHTML = "";
@@ -299,7 +310,7 @@ function displayRecommendations(data) {
     });
 }
 
-// play song snippet in a mini player
+// Play song snippet in a mini player
 function playSnippet(url) {
     const errorContainer = document.getElementById("errorContainer");
     const errorBox = document.getElementById("errorBox");
@@ -325,7 +336,7 @@ function playSnippet(url) {
     miniPlayer.style.display = "block";
 }
 
-// clear the selected songs
+// Clear the selected songs
 function clearSelectedSongs() {
     const selectedSongs = document.getElementById("selectedSongs");
     selectedSongs.innerHTML = "<h3>Song choices:</h3>";
