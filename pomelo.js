@@ -1,6 +1,6 @@
 var client_id = '455f256a6ad94b7c8bf12d16c0b97846';
 var client_secret = 'a20847f30e0542bab0974e144477070c';
-var redirect = "http://localhost:5500/songPick.html";
+var redirect = "https://jennifercruzcallejas.github.io/pomelo/songPick.html";
 
 const AUTHORIZE = "https://accounts.spotify.com/authorize";
 const token = "https://accounts.spotify.com/api/token";
