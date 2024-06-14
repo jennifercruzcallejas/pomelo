@@ -9,7 +9,7 @@ const RECOMMENDATIONS = "https://api.spotify.com/v1/recommendations";
 
 // redirect user to Spotify authorization page
 function authorize() {
-    let url = `${AUTHORIZE}?client_id=${client_id}&response_type=code&redirect_uri=${encodeURI(redirect)}&show_dialog=true&scope=user-read-private user-read-email user-read-playback-state user-top-read`;
+    let url = `${AUTHORIZE}?client_id=${client_id}&response_type=code&redirect_uri=${encodeURIComponent(redirectUri)}&show_dialog=true&scope=user-read-private user-read-email user-read-playback-state user-top-read`;
     window.location.href = url;
 }
 
